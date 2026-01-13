@@ -1,0 +1,20 @@
+name: Notify n8n
+
+on:
+  workflow_dispatch:
+    inputs:
+      job_description:
+        description: "Job description text"
+        required: true
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call n8n webhook
+        run: |
+          curl -X POST https://n8n.heimdalcloud.cc/webhook/Automated-Resume-Cover-Letter-Generator \
+          -H "Content-Type: application/json" \
+          -d '{
+            "job_description": "${{ github.event.inputs.job_description }}"
+          }'
